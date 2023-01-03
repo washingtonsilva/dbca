@@ -1,11 +1,20 @@
 ---
 title: "Delineamento em Blocos Completos Aleatorizados (DBCA)"
-subtitle: "Descrição e Análise dos Dados"
-author: "Prof. Washington S. da Silva"
+description: | 
+  Um tutorial sobre o delineamento em Blocos Completos e sua análise utilizando 
+  a linguagem R.
+title-block-banner: true
+author:
+  - name: Prof. Washington S. da Silva 
+    affiliation: IFMG - Campus Formiga - Mestrado Profissional em Administração.
+    affiliation-url: https://www.formiga.ifmg.edu.br/mestrado
+citation:
+  url: https://washingtonsilva.github.io/dbca/
+lang: "pt"
 date: today
 bibliography: references.bib
 crossref:
-  fig-title: '**Figura**'
+  fig-title: '**Fig.**'
   fig-labels: arabic
   title-delim: "**.**"
 execute: 
@@ -17,7 +26,6 @@ execute:
   text-align: justify
       }
 </style>
-
 
 ## Conceitos Básicos
 
@@ -72,7 +80,8 @@ subgrupos homogênos.
 - ***Design***: É o seu experimento.
 
 
-### Exemplo
+::: {.callout-note icon=false}
+## Exemplo
 
 Um estudo no qual os participantes são, inicialmente, divididos em blocos (subconjuntos relativamente homogêneos) de acordo com alguma característica 
 (por exemplo, idade) que não é um foco de interesse e são então atribuídos, aleatoriamente, aos diferentes tratamentos de tal forma que cada tratamento aparece uma vez em cada bloco. 
@@ -91,6 +100,8 @@ quatro níveis (A, B, C, D) e 16 indivíduos (de quatro grupos etários) é um d
 
 Ao garantir que o fator de perturbação (aqui, idade) seja igualmente 
 representado em todos as condições experimentais, um DBC reduz ou elimina sua contribuição para o erro experimental.
+:::
+
 
     
 ## DBCA: Modelo Linear Normal - Efeitos Fixos.
@@ -223,20 +234,24 @@ As etapas típicas da análise dos dados produzidos por um DBCA serão ilustrada
 ## Análise
 
   Vamos ilustrar a análise de dados de um experimento que utilizou um DBCA utilizando o seguinte experimento:
-	
->> Três soluções de lavagem estão sendo comparadas para avaliar a sua eficiência 
+  
+::: {.callout-note icon=false}
+## Experimento
+
+Três soluções de lavagem estão sendo comparadas para avaliar a sua eficiência 
 em retardar o  crescimento de bactérias em containers de leite. A Análise é 
 feita em um laboratório, e apenas três ensaios podem ser executados em qualquer 
 dia. O experimentador decide usar um delineamento em blocos completos aleatorizados (DBCA). As observações são tomadas durante quatro dias, e os dados são apresentados na tabela abaixo. 
+:::
 
     
 ### 1. Identifique o bloco (fator de perturbação), o fator de interesse (tratamento) e seus níveis e a variável resposta deste experimento. Além disso, descreva o modelo linear do experimento.
 
-- Fator de Perturbação/Bloco: **dias**.
+- Fator de Perturbação/Blocos: **dias**.
 	
 - Fator de Interesse/Tratamento: **soluções para lavagem de containers de leite.**
 	
-- Níveis do Fator de Interesse/Tratamento: **As 3 soluções de lavagem distintas**
+- Níveis do Fator de Interesse/Tratamento: **As três soluções de lavagem distintas**
 	
 - variável Resposta ($y$)]: **O crescimento, medido pela contagem, de bactérias**
 
@@ -322,26 +337,58 @@ Com esses passsos, os dados foram importados e estruturados em um formato adequa
 
 ### 3. Faça uma Análise Exploratória dos Dados
 
+::: {.callout-tip}
+## Dica: Análise Exploratória dos Dados
+
+Uma Análise Exploratória dos Dados com gráficos e estatísticas, é uma parte importante de qualquer análise para:
+
+- entender as *propriedades* dos dados.
+- *estruturar os dados* no formato adequado para análise.
+- encontrar *padrões* nos dados.
+- *descrever* os dados/fenômeno.
+- identificar *erros* nos dados.
+- sugerir *estratégias de modelagem*.
+- *depurar* análises.
+- *comunicar* resultados.
+:::
+
+   Um boxplot comparativo das distribuições é o gráfico exploratório usual para 
+explorar dados envolvendo uma variável numérica e uma ou mais variáveis 
+categóricas. 
+
+  Entretanto, um boxplot requer uma amostra considerável (50 observações 
+por grupo pelo menos), e caso seja utilizado em amostras pequenas, tende 
+distorcer ou ocultar as propriedades da distribuição. 
+
+Para amostras menores, como a do experimento em questão um gráfico de violino (*violin plot*) é mais adequado e tende a retratar melhor as propriedades das distribuições por grupo (no caso, por tratamento).
+
+Para produzir um gráfico de violino usando o pacote `ggplot2`, podemos 
+utilizar a função `geom_violin()` e o seguinte código:
+
 ```{r}
 #| echo: true
 #| eval: true
 #| label: fig-fig01
-#| fig-cap: Gráfico de violino comparativo entre a medida de crescimento de bactérias e as soluções testadas.
+#| fig-cap: Gráfico de violino comparativo entre a medida de crescimento de bactérias e as soluções testadas. O ponto vermelho representa a mediana dos dados e os pontos pretos os dados.
 #| fig-dpi: 300
 
 # Violin plot entre y e solucao
 
-ggplot(dados, aes(x = solucao, y = y, fill = solucao)) + 
+ggplot(dados, aes(x = solucao, y = y)) + 
    geom_violin() +  
-   stat_summary(fun.y = "median", geom = "point", size = 2, color = "black")
+   stat_summary(fun.y = "median", geom = "point", size = 2, color = "red") + 
+   xlab("solucões Testadas") + 
+   ylab("crescimento (quantidade) de bactérias") + 
+   geom_jitter(shape  =16, position = position_jitter(0.2)) +
+   theme_minimal()
 ```
 
 Observando a @fig-fig01, pode-se verificar que a solução 3, aparentemente, 
 foi a que apresentou a maior redução no crescimento de bactérias nos 
 containers de leite. Além disso, parece não haver diferença entre os 
-resultados produzidos pelas soluções 1 e 2. Por fim, a Fig. 1 mostra que 
-pode que não se pode descartar a presença de outliers nas distribuições 
-dos resultados das três soluções, principalmanete na soluçào 3. 
+resultados produzidos pelas soluções 1 e 2. Por fim, a @fig-fig01 mostra que 
+as distribuições dos dados três soluções apresentam assimetria positiva 
+devido a possíveis outliers nas distribuições dos resultados das três soluções. 
 
 
 #### 4. Estimação do Modelo Linear Normal.
@@ -384,33 +431,33 @@ ao nível de significância adotado (em geral, $\alpha = 0.05$), maior a
 chance de rejeitarmos a hipótese nula de que não há diferença entre as 
 médias dos tratamentos, e vice-versa. 
 
->>Como o valor-p associado ao teste F entre as médias de contatem de bactérias das soluções testadas foi 0,0003, os dados fornecem forte evidência para 
+Como o valor-p associado ao teste F entre as médias de contatem de bactérias das soluções testadas foi 0,0003, os dados fornecem forte evidência para 
 rejeitarmos a hipótese nula de que as médias dos tratamentos são iguais.
 
-**Interpretação dos Efeitos Principais ($\tau_i$)**
+**Tamanho do Efeito**
 
-  Utilizando a função interna `coef(modelo)`, podemos acessar as estimativas 
-da média global ($\hat{\mu}$) e dos efeitos principais $\hat{\tau}_i$:
+No contexto de testes semelhantes a ANOVA, é comum relatar tamanhos de efeitos. Esses tamanhos de efeito representam a quantidade da variabilidade explicada por cada um dos fatores incluídos no modelo.
+
+Por exemplo, podemos perguntar qual é a porcentagem da variação total no 
+crescimento de bactérias associada aos tratamentos (soluções de lavagem). 
+Esta medida é chamada de *Eta-quadrático* ($\eta^{2}$):
+
+$$
+\eta^2 = \frac{SQ_{tratamento}}{SQ_{total}} = \frac{703.5}{703.5 + 1106.9 + 51.8} =
+0.38 = 38\%
+$$
+Quando adicionamos mais termos ao nosso modelo, como é o caso do experimento 
+que estamos analisando, podemos fazer duas perguntas diferentes sobre a porcentagem de variância explicada por um preditor - quanta variância é explicada pelo fator no total e quanto da variação é explicada *ao controlar quaisquer outros preditores*. 
+
+A última pergunta é respondida pelo Eta-parcial quadrático $\eta^{2}_{p}$, que é a porcentagem da variância *parcial* (após controlar outros fatores no modelo) associada a um fator:
 
 ```{r}
 #| echo: true
 #| eval: true
 
-coef(mod_dbca)
+# Estimação dos tamanhos de efeitos
+effectsize::eta_squared(mod_dbca, partial = TRUE)
 ```
-
-Veja que a estimativa do efeito principal devido à solução 1 ($\hat{\tau}_1$) 
-não é exibida. Isto se deve ao fato de que o algoritmo utilzado pela 
-função `aov()` sempre seleciona o primeiro nível do tratamento como o nível de referência, que é o nível em relação ao qual as demais estimativas de ($\hat{\tau}_{i}$) devem ser interpretadas. 
-
-Isto posto, a interpretação das estimativas é a seguinte:
-
-- $\hat{\tau}_2 = 2.25$: os containers que foram lavados com a solução 2, apresentaram um crescimento médio de bactérias superior ao crescimento médio 
-dos containers tratados com a solução 1. Em média, apresentaram 2.25 bactérias 
-a mais.
-
-- $\hat{\tau}_3 = 15.0$: os containers que foram lavados com a solução 3, apresentaram um crescimento médio de bactérias inferior o crescimento médio 
-dos containers tratados com a solução 1. Em média, apresentaram 15 bactérias a menos.
 
 
 ### 5. Diagnóstico do modelo.
@@ -461,11 +508,12 @@ os resíduos seguem uma distribuição aproximadamente normal.
 library(ggpubr)
 
 # Gráfico quantil-quantil dos resíduos
-ggqqplot(residuals(mod_dbca))
+ggqqplot(residuals(mod_dbca)) + 
+  xlab("quantis teóricos de uma distribuição normal padrão") + 
+  ylab("resíduos")
 ```
 
-  Analisando a @fig-fig02, é fácil verificar que os resíduos estão situados dentro da região de confiança (95%) compatível com uma distribuição normal 
-padrão aproximada.
+  Analisando a @fig-fig02, é fácil verificar que os resíduos estão situados dentro da região de confiança (95%), portanto podemos considerar a distribuição dos resíduos compatível com uma distribuição normal padrão aproximada.
 
 **Teste de Shapiro-Wilk de normalidade dos resíduos**
 
@@ -520,19 +568,6 @@ Considerando $\alpha = 0.05$, como o valor-p do teste é muito superior ao
 nível de significância escolhido, os dados fornecem forte evidência para 
 não rejeitarmos a hipótese nula de que os resíduos possuem variância 
 constante (ou homogênea) entre as diferentes soluções (tratamentos) testadas.
-
-```{r}
-#| echo: true
-#| eval: true
-
-#### Teste de Bartlett: variancia homogenea pelo tratamento
-fligner.test(y ~ dia, data = dados)
-```
-
-Considerando $\alpha = 0.05$, como o valor-p do teste é muito superior ao 
-nível de significância escolhido, os dados fornecem forte evidência para 
-não rejeitarmos a hipótese nula de que os resíduos possuem variância 
-constante (ou homogênea) em relação aos dias (blocos).
 
 
 #### 5.3 Verificando se há interação entre bloco e tratamento
@@ -631,13 +666,16 @@ a hipótese nula de que os efeitos principais ($\tau_i$) e os blocos
 que não há interação entre blocos e tratamento.
 
 
-### 6. Existem diferenças entre as soluções? Fundamente sua conclusão.
+### 6. Os resultados indicaram diferenças entre os crescimentos médios de bactérias produzidos pelas três soluções?
 
-A Análise da Variância fornece evidências ($\alpha = 5\%$) de que há diferenças 
-entre os crescimentos médios de bactérias produzidos pelas 3 soluções para 
-lavagem. 	
+Uma Análise da Variância dos resultados do delineamento em blocos completos 
+executado foi conduzida para comparar o efeito de três diferentes soluções 
+de lavagem sobre o crescimento de bactérias em containers de leite. A 
+ANOVA indicou que houve uma diferença entre pelo menos duas soluções 
+[ *F*(2, 6) = 40.72, *p* < .001, $\eta^2_p$ = .93]. A análise dos resíduos 
+indicou a adequação do modelo utilizado.
 
-	
+
 ### 7. Qual solução deveria ser recomendada? Utilize os testes de Fisher e Tukey.**
 
 Como a ANOVA indicou diferenças entre o crescimento (quantidade) média de 
@@ -702,10 +740,9 @@ a testes liberais e o menor erro tipo I.
 #| eval: true
 
 ### Teste de Tukey
-agricolae::HSD.test(mod_dbca, 
-                    "solucao", 
-                    alpha = 0.05, 
-                    console = TRUE)
+TukeyHSD(mod_dbca, 
+         "solucao", 
+         conf.level = 0.95)
 ```
 
 No caso do experimento analisado, os dois testes produziram os mesmos 
@@ -720,22 +757,25 @@ esse fato, apresentam a letra `a` no caso.
 Portanto, a solução recomendada, com fundamento nos resultados do experimento, seria a solução 3.
 
 
-### 8. Comunicando os resultados da análise. 
+### 8. Comunicando os resultados finais da análise. 
 
-Uma Análise da Variância de um delineamento em blocos completos das unidades experimentais foi conduzida para comparar o efeito de três diferentes soluções 
-de lavagem sobre o crescimento de bactérias em containers de leite. Houve um efeito significativo das soluções de lavagem de containers no nível $p < .05$ para as três soluções [ *F*(2, 6) = 40.72, *p* < .001, $\eta^2_p$ = .93]. A análise dos resíduos indicou a adequação do modelo utilizado.
+Uma Análise da Variância dos resultados do delineamento em blocos completos 
+executado foi conduzida para comparar o efeito de três diferentes soluções 
+de lavagem sobre o crescimento de bactérias em containers de leite. A 
+ANOVA indicou que houve uma diferença entre pelo menos duas soluções 
+[ *F*(2, 6) = 40.72, *p* < .001, $\eta^2_p$ = .93]. A análise dos resíduos 
+indicou a adequação do modelo utilizado.
 
 Comparações *post hoc* usando o teste de Tukey indicaram que o crescimento 
-médio de bactérias após a aplicação da solução 3 (M = 4,20, SD = 1,30) foi significativamente diferente dos resultados obtidos com a solução 1 (M = 2,20, 
-SD = 0,84) e com a solução 2 (M = 2,20, SD = 0,84). No entanto, o resultado 
-produzido pela solução 1 (M = 3,60, SD = 0,89) não diferiu significativamente 
-das solução 2. 
+médio de bactérias após a aplicação da solução 3 foi significativamente 
+diferente dos resultados obtidos com a solução 1 
+[*p* < 0.001, IC 95%. = [-21,38, -8,62] e com a solução 2 
+[*p* < 0.001, IC 95%. = [-23,63, -10,87]. 
 
-```{r}
-apa::anova_apa(mod_dbca, format = "rmarkdown")
-```
+Não houve diferença estatisticamente significativa entre o crescimento 
+médio de bactérias produzidos pelas soluções 1 e 2 [*p* < 0,5578, IC 95%. = 
+[-4,13, -8,63].
 
-  
 
 ### 9. Utilize um Método Não-Paramétrico
 
