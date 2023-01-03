@@ -3,7 +3,7 @@ title: "Delineamento em Blocos Completos Aleatorizados (DBCA)"
 subtitle: "Descrição e Análise dos Dados"
 author: "Prof. Washington S. da Silva"
 date: today
-bibliography: bibliografia.bib
+bibliography: references.bib
 nocite: |
   @*
 crossref:
