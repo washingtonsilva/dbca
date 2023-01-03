@@ -1,0 +1,1 @@
+Tutorial sobre o Delineamento em Blocos Completos Aleatorizados.
