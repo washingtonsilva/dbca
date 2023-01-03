@@ -35,7 +35,7 @@ variável resposta correspondentes aos dois tratamentos.
 
 Isso faz com que a variabilidade de sujeito para sujeito seja muito reduzida. Também dizemos que bloqueamos os sujeitos ou que um sujeito individual é um bloco.
 
-Sob uma abordagem mais geral, podemos afirmar que em qualquer experimento, a variabilidade proveniente de um **fator de perturbação** pode afetar os resultados.
+Sob uma abordagem mais geral, conforme @montgomery2001, podemos afirmar que em qualquer experimento, a variabilidade proveniente de um **fator de perturbação** pode afetar os resultados.
 
 Em geral, definimos um fator de perturbação como um fator do delineamento 
 que, provavelmente tem um efeito sobre a variável resposta 
