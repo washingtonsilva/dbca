@@ -737,4 +737,7 @@ apa::anova_apa(mod_dbca, format = "rmarkdown")
   
 
 ### 9. Utilize um Método Não-Paramétrico
+
+
+## Referências
 		
