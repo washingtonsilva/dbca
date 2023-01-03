@@ -740,4 +740,7 @@ apa::anova_apa(mod_dbca, format = "rmarkdown")
 
 
 ## Referências
+
+::: {#refs}
+:::
 		
