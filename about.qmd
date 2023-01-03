@@ -1,9 +1,6 @@
 ---
-title: "About"
+title: "Sobre"
 ---
 
-About this site
-
-```{r}
-1 + 1
-```
+Este site contém um tutorial sobre o Delineamento em Blocos Compeletos 
+Aleatorizados.
