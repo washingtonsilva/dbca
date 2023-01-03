@@ -4,8 +4,6 @@ subtitle: "Descrição e Análise dos Dados"
 author: "Prof. Washington S. da Silva"
 date: today
 bibliography: references.bib
-nocite: |
-  @*
 crossref:
   fig-title: '**Figura**'
   fig-labels: arabic
