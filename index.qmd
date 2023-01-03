@@ -650,8 +650,9 @@ apresentaram médias estatisticamente iguais?
 - Qual solução apresentou o melhor resultado? Ou seja, apresentou a 
 maior redução no crescimento de bactérias nos containers de leite?
 
-- Necessitamos de procedimentos de comparações múltiplas de médias para responder estas questões. Entre os dois mais utilizados, temos os testes de Fisher e 
-de Tukey.
+- Necessitamos de procedimentos de comparações múltiplas de médias para responder estas questões. 
+
+Entre os dois mais utilizados, temos os testes de Fisher e de Tukey.
 
 **Teste de Fisher** 
 
