@@ -7,7 +7,6 @@ website:
   navbar:
     left:
       - href: index.qmd
-      - about.qmd
 
 format:
   html:
