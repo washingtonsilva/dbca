@@ -3,7 +3,7 @@ title: "Delineamento em Blocos Completos Aleatorizados (DBCA)"
 description: | 
   Um tutorial sobre o delineamento em Blocos Completos e sua análise utilizando 
   a linguagem R.
-title-block-banner: true
+title-block-banner: false
 author:
   - name: Prof. Washington S. da Silva 
     affiliation: IFMG - Campus Formiga - Mestrado Profissional em Administração.
@@ -522,20 +522,27 @@ rejeitarmos a hipótese nula de que as médias dos tratamentos são iguais.
 
 **Tamanho do Efeito**
 
-No contexto de testes semelhantes a ANOVA, é comum relatar tamanhos de efeitos. Esses tamanhos de efeito representam a quantidade da variabilidade explicada por cada um dos fatores incluídos no modelo.
+Tornou-se um padrão reportar tamanhos de efeitos nos artigos científicos de 
+diversas áreas, por diversas razões, para entende-las veja @ferguson2016, 
+@hummel2019.
 
-Por exemplo, podemos perguntar qual é a porcentagem da variação total no 
-crescimento de bactérias associada aos tratamentos (soluções de lavagem). 
-Esta medida é chamada de *Eta-quadrático* ($\eta^{2}$):
+Para ilustrar o conceito de tamanho do efeito para uma Análise da Variância, 
+no contexto do experimento analisado, podemos perguntar qual é a porcentagem 
+da variação total no crescimento de bactérias associada aos tratamentos 
+(soluções de lavagem). Esta medida é chamada de *Eta-quadrático* ($\eta^{2}$):
 
 $$
 \eta^2 = \frac{SQ_{tratamento}}{SQ_{total}} = \frac{703.5}{703.5 + 1106.9 + 51.8} =
 0.38 = 38\%
 $$
-Quando adicionamos mais termos ao nosso modelo, como é o caso do experimento 
-que estamos analisando, podemos fazer duas perguntas diferentes sobre a porcentagem de variância explicada por um preditor - quanta variância é explicada pelo fator no total e quanto da variação é explicada *ao controlar quaisquer outros preditores*. 
 
-A última pergunta é respondida pelo Eta-parcial quadrático $\eta^{2}_{p}$, que é a porcentagem da variância *parcial* (após controlar outros fatores no modelo) associada a um fator:
+Quando adicionamos mais termos ao modelo que estamos analisando, como é o caso do experimento com a inclusão de blocos, podemos fazer duas perguntas diferentes 
+sobre a porcentagem de variância explicada por um preditor - quanta variância é explicada pelo fator no total (38% no caso dos tratamentos) e quanto da 
+variação é explicada *ao controlar quaisquer outros fatores*. 
+
+A última pergunta é respondida pelo Eta-parcial quadrático $\eta^{2}_{p}$, que 
+é a porcentagem da variância *parcial* (após controlar outros fatores no 
+modelo) associada a um fator:
 
 ```{r}
 #| echo: true
@@ -865,6 +872,7 @@ médio de bactérias produzidos pelas soluções 1 e 2 [*p* < 0,5578, IC 95%. =
 
 ### 9. Utilize um Método Não-Paramétrico
 
+*Em construção*
 
 ## Referências
 
