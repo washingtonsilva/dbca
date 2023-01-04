@@ -1,6 +1,27 @@
 ---
-title: "Sobre"
+title: "Washington Santos da Silva"
+about:
+  template: solana
+  image: img/eu.jpg
+  links:
+    - icon: twitter
+      text: twitter
+      href: https://twitter.com/twssecn
+    - icon: github
+      text: Github
+      href: https://github.com/washingtonsilva
 ---
 
-Este site contém um tutorial sobre o Delineamento em Blocos Compeletos 
-Aleatorizados.
+Professor Titular do IFMG - Campus Formiga. Professor e Pesquisador do 
+quadro permanente do [Mestrado Profissional em Administração](https://www.formiga.ifmg.edu.br/mestrado).
+
+## Educação
+
+Universidade Federal de Lavras | Lavras, MG.
+
+DSc. e MSc. em Estatística e Experimentação Agropecuária.
+
+Universidade Federal de Minas Gerais | Belo Horizonte, MG.
+
+B.A em Economia.
+

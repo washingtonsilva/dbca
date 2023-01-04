@@ -29,12 +29,81 @@ execute:
 
 ## Conceitos Básicos
 
+Os conceitos a seguir foram baseados em @casella2008.
+
+::: {.callout-note icon=false}
+## Unidade Experimental
+
+A unidade experimental é a unidade (sujeito, planta, vaso, animal...)
+que é atribuído aleatoriamente a um tratamento.
+:::
+
+A unidade experimental, como o nome indica, é a unidade básica do experimento, 
+e *define a unidade a ser replicada para aumentar os graus de liberdade*. Na 
+definição de unidade experimental, a frase “atribuída aleatoriamente” é 
+de importância crucial.
+
+::: {.callout-note icon=false}
+## Unidade de Amostragem
+
+Uma unidade de amostragem é o objeto que é medido em um experimento. Pode ser 
+diferente da unidade experimental.
+:::
+
+::: {.callout-note icon=false}
+## Repetição
+
+O princípio da repetição consiste em aplicarm o mesmo tratamento a várias
+unidades experimentais em um mesmo experimento.
+:::
+
+O princípo da repetição permite obter a variação entre unidades experimentais, 
+ou seja, permite obter uma estimativa do erro experimental.
+
+::: {.callout-note icon=false}
+## Aleatorização
+
+Talvez o princípio mais fundamental da experimentação seja a aleatorização, ou 
+seja, obter as observações (ou, mais precisamente, as unidades experimentais) 
+em um forma aleatória que é tão livre de viés quanto possível.
+:::
+
+A ideia básica da aleatorização é que, dado um delineamento, a atribuição 
+das unidades experimentais aos tratamentos deve ser escolhida aleatoriamente, 
+com igual probabilidade, entre todas as atribuições possíveis. Essa estratégia 
+resulta em uma amostra aleatória simples. 
+
+A atribuição aleatória de unidades experimentais a tratamentos deve resultar 
+nos seguintes resultados desejáveis:
+
+**Eliminação de viés sistemático**. O viés vem em muitas formas, e algumas 
+delas são desconhecidas. Alguns exemplos são gradientes de luz ou temperatura, 
+tendência de entrevistador em pesquisas e outras ocorrências. A aleatorização 
+é uma maneira de quebrar um efeito sistemático.
+
+**Obtenção de uma amostra representativa**. O objetivo final em qualquer 
+experimento é fazer uma inferência válida para uma população, portanto, os 
+dados devem ser representativos dessa população. A aleatorização é necessária 
+para se obter uma amostra representativa.
+
+**Controla variáveis ou fatores de confundimento**
+
+Fatores de confundimento existem em todas os experimentos. Por exemplo, 
+considere um experimento com seres humanosp para testar o efeito de dietas 
+na pressão arterial, medida em 12 indivíduos. Embora possamos recrutar 
+sujeitos com um estado geral de saúde semelhante, fatores de confundimento 
+como estilo de vida, raça, disposição genética ou muitos outros fatores podem influenciar os resultados. 
+
+Apesar de ser possível controlar alguns fatores de confundmento, tal como raça, 
+outros fatores são incontroláveis, e até mesmo desconhecidos, como a disposição 
+genética. A aleatorização ajudará a distribuir essa variação desconhecida 
+ao longo do experimento, quebrando a influência do fator de confundimento.
+
 
 ## Visão Geral
 
 Em muitas situações sabemos que as unidades experimentais 
-**não são homogêneas**, e fazer o uso explícito da estrutura especial das unidades experimentais geralmente ajuda a reduzir a variabilidade, isto é, o 
-erro experimental.
+**não são homogêneas**, e fazer o uso explícito da estrutura especial das unidades experimentais geralmente ajuda a reduzir o erro experimental (@meier2022).
 
 Em um curso de estatística básica, aprendemos como aplicar o teste $t$ emparelhado. Esse teste é utilizado em situações em que dois tratamentos são aplicados no mesmo “objeto” ou “sujeito”. Pense, por exemplo, na aplicação de dois tratamentos, em paralelo, em seres humanos, como a aplicação de dois tipos de colírios diferentes, cada um aplicado em um dos dois olhos. 
 
@@ -146,7 +215,18 @@ os blocos e os níveis dos fatores.
 \end{array}
 	
 
-$F_{tabelado}=F_{\nu_1 = (a-1), \nu_2 = (a-1)(b-1)}$	
+$F_{tabelado}=F_{\nu_1 = (a-1), \nu_2 = (a-1)(b-1)}$. 
+
+::: {.callout-important icon=false}
+## Estimador do Erro Experimental
+
+O quadrado médio do resíduo:
+
+$$
+QM_{resíduo} = \frac{SQ_{resíduo}}{(a-1)(b-1)}
+$$
+é o estimador do erro experimental no contexto deste modelo de um DBCA.
+:::
 
 Considerando que são $a$ níveis do fator de interesse e $b$ blocos. A hipótese 
 de interesse é:
@@ -294,8 +374,11 @@ dados %>%
       kable_styling("hover", full_width = F)
 ```  
 
-  Para importar um arquivo texto separado por tabulações denominado 
-`solucao.txt`, pode-se utilizar o seguinte código
+  Considerando que o script `R` que contém seus código para analisa os dados  
+estão em uma pasta qualquer contendo uma subpasta denominada `dado` que 
+contem seu arquivo de dados, para importar, por exemplo, um arquivo texto 
+separado por tabulações denominado `solucao.txt`, pode-se utilizar o seguinte 
+código
 
 ```{r}
 #| echo: true
@@ -377,9 +460,12 @@ utilizar a função `geom_violin()` e o seguinte código:
 ggplot(dados, aes(x = solucao, y = y)) + 
    geom_violin() +  
    stat_summary(fun.y = "median", geom = "point", size = 2, color = "red") + 
-   xlab("solucões Testadas") + 
+   xlab("") + 
    ylab("crescimento (quantidade) de bactérias") + 
-   geom_jitter(shape  =16, position = position_jitter(0.2)) +
+   geom_jitter(shape  = 16, position = position_jitter(0.2)) + 
+   scale_x_discrete(labels = c("S1" = "Solução 1", 
+                               "S2" = "Solução 2",
+                               "S3" = "Solução 3")) +
    theme_minimal()
 ```
 
