@@ -13,6 +13,7 @@ citation:
 lang: "pt"
 date: today
 bibliography: references.bib
+csl: associacao-brasileira-de-normas-tecnicas.csl
 crossref:
   fig-title: '**Fig.**'
   fig-labels: arabic
@@ -522,27 +523,48 @@ rejeitarmos a hipótese nula de que as médias dos tratamentos são iguais.
 
 **Tamanho do Efeito**
 
-Tornou-se um padrão reportar tamanhos de efeitos nos artigos científicos de 
-diversas áreas, por diversas razões, para entende-las veja @ferguson2016, 
-@hummel2019.
+Tornou-se um padrão reportar tamanhos de efeitos em artigos científicos de 
+diversas áreas, por diversas razões, para uma visão geral recomendo @cohen1988,
+@fritz2012 e @ferguson2016. Para analisar uma visão de sua importâcnia em 
+economica comportamental veja @hummel2019.
 
 Para ilustrar o conceito de tamanho do efeito para uma Análise da Variância, 
-no contexto do experimento analisado, podemos perguntar qual é a porcentagem 
-da variação total no crescimento de bactérias associada aos tratamentos 
-(soluções de lavagem). Esta medida é chamada de *Eta-quadrático* ($\eta^{2}$):
+no contexto do experimento analisado, podemos perguntar inicialmente qual é a porcentagem da variação total no crescimento de bactérias associada aos 
+tratamentos (soluções de lavagem). Esta medida é chamada de *Eta-quadrático* ($\eta^{2}$):
 
 $$
 \eta^2 = \frac{SQ_{tratamento}}{SQ_{total}} = \frac{703.5}{703.5 + 1106.9 + 51.8} =
 0.38 = 38\%
 $$
+Podemos utilizar a função `eta_squared()` do pacote `effectsize` para estimar 
+o $\eta^{2}$:
 
-Quando adicionamos mais termos ao modelo que estamos analisando, como é o caso do experimento com a inclusão de blocos, podemos fazer duas perguntas diferentes 
-sobre a porcentagem de variância explicada por um preditor - quanta variância é explicada pelo fator no total (38% no caso dos tratamentos) e quanto da 
-variação é explicada *ao controlar quaisquer outros fatores*. 
+```{r}
+#| echo: true
+#| eval: true
 
-A última pergunta é respondida pelo Eta-parcial quadrático $\eta^{2}_{p}$, que 
-é a porcentagem da variância *parcial* (após controlar outros fatores no 
-modelo) associada a um fator:
+# Estimação dos tamanhos de efeitos
+effectsize::eta_squared(mod_dbca, partial = FALSE)
+```
+
+Quando adicionamos mais termos ao modelo que estamos analisando (lembrando que 
+no experimento que estamos anlisando temos um fator de interesse (tratamento) 
+e um fator de perturbação (blocos)) podemos fazer uma pergunta diferente:
+qual a porcentagem da variação é explicada *ao controlar quaisquer outros fatores*.
+
+$$
+\eta^{2}_p = \frac{SQ_{tratamento}}{SQ_{tratamento} + SQ_{resíduo}} = \frac{703.5}{703.5 + 51.8} = 0.93 = 93\%
+$$
+
+Essa última pergunta é respondida pelo Eta-parcial quadrático $\eta^{2}_{p}$, 
+que é a porcentagem da variância *parcial* (após controlar outros fatores no 
+modelo) associada a um fator. 
+
+Em outras palavras, $\eta^{2}_{p}$ descreve a proporção de variação associada 
+a um fator quando a variação associada a todos os outros efeitos incluídos no 
+modeo foi removida.
+
+Novamente, podemos utiizar a função `eta_squared(..., partial = TRUE)` do pacote `effectsize` para estimar o $\eta^{2}_p$:
 
 ```{r}
 #| echo: true
@@ -551,6 +573,13 @@ modelo) associada a um fator:
 # Estimação dos tamanhos de efeitos
 effectsize::eta_squared(mod_dbca, partial = TRUE)
 ```
+
+Na falta de conhecimento mais profundo e de outras referências, a regra 
+de bolso (@cohen1988) para a interpretação da magnitude de $\eta^{2}_p$ é:
+
+- $\eta^{2}_p \approx 0.01$ indica um efeito fraco ou pequeno. 
+- $\eta^{2}_p \approx 0.06$ indica um efeito moderado.
+- $\eta^{2}_p \approx 0.16$ indica um efeito forte ou grande.
 
 
 ### 5. Diagnóstico do modelo.
@@ -618,7 +647,7 @@ De forma simplificada, podemos dizer que a hipótese nula do teste é que os res
 
 Por outro lado, se o valor-p for maior que o nível de significância escolhido, 
 a hipótese nula (de que os dados vieram de uma população normalmente 
-distribuída) não pode ser rejeitada. Por exemplo, para um nível $\alpha$ de \0,05, um valor p inferior a 0,05 implica na rejeição da hipótese nula de 
+distribuída) não pode ser rejeitada. Por exemplo, para um nível $\alpha$ de 0,05, um valor p inferior a 0,05 implica na rejeição da hipótese nula de 
 que os dados são de uma população com distribuição (aproximadamente) 
 normalmente distribuída.
 
@@ -852,11 +881,14 @@ Portanto, a solução recomendada, com fundamento nos resultados do experimento,
 
 ### 8. Comunicando os resultados finais da análise. 
 
+  A forma de reportar análises estatísticas depende da área do conhecimento e 
+da revista científica específica. Entretanto, o padrão definido pelo *American Psychological Association* (@cooper2018) é bastante utilizado em ciëncias comportamentais. Seguindo o padrão APA, as conclusões da análise do experimento seriam aproximadamente como se segue:
+
 Uma Análise da Variância dos resultados do delineamento em blocos completos 
 executado foi conduzida para comparar o efeito de três diferentes soluções 
 de lavagem sobre o crescimento de bactérias em containers de leite. A 
 ANOVA indicou que houve uma diferença entre pelo menos duas soluções 
-[ *F*(2, 6) = 40.72, *p* < .001, $\eta^2_p$ = .93]. A análise dos resíduos 
+[*F*(2, 6) = 40.72, *p* < .001, $\eta^2_p$ = .93]. A análise dos resíduos 
 indicou a adequação do modelo utilizado.
 
 Comparações *post hoc* usando o teste de Tukey indicaram que o crescimento 
